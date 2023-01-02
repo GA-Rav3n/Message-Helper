@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AT Global Message Helper
 // @namespace    https://comastuff.com/
-// @version      0.4
+// @version      0.5
 // @description  Provides templates for all universes in a particular community, without having to re-type them for each universe.
 // @author       Neshi & Rav3n
 // @match        https://*.ogame.gameforge.com/game/admin2/sendmsg.php?uid=*
@@ -54,7 +54,8 @@
 		   let templatePicker = $('#templatePicker');
 		   templatePicker.append($('<option disabled selected>--Choose A Global Template--</option>'));
 		   $('form input[type="checkbox"]').prop('checked',true);
-		   $('form input[type="checkbox"]').prop('disabled',true); // Ensures that by using this script, notes MUST be saved and CANNOT be unchecked.
+		   setPermLevel();
+		   //$('form input[type="checkbox"]').prop('disabled',true); // Ensures that by using this script, notes MUST be saved and CANNOT be unchecked.
 		   for(var i=0;i<data.messages.length;i++){
             templatePicker.append($('<option value=\''+data.messages[i].content+'\' text=\''+data.messages[i].title+'\'>'+data.messages[i].title+'</option>'));
         }
@@ -66,7 +67,8 @@
             $('form textarea').val(message);
             $('form input[name="betreff"]').val(selected.text());
             $('form input[type="checkbox"]').prop('checked',true);
-			$('form input[type="checkbox"]').prop('disabled',true); // Backup disable in case the first check fails.
+			setPermLevel();
+			//$('form input[type="checkbox"]').prop('disabled',true); // Backup disable in case the first check fails.
         });
         sortSelect(document.getElementById('templatePicker'))
        });
@@ -74,17 +76,39 @@
 function setServerInfo() {
 	switch(community) {
         case 'en':
-		jsonScript="https://raw.githubusercontent.com/GA-Rav3n/Message-Helper/main/EN-TPL.json";
-	case 'us':
-		jsonScript="https://raw.githubusercontent.com/GA-Rav3n/Message-Helper/main/US-TPL.json";
-		break;
-	case 'pl':
-		jsonScript="https://raw.githubusercontent.com/Neshi/Og/main/data/messages.json";
-		break;
-	default:
-            	alert("UNSUPPORTED VERSION\n\nThis version of the Global Message Helper cannot be used on this domain in the host language as this language isn't currently supported.\nPlease contact Rav3n on Mattermost to advise him of this and to provide translations for your community.");
-		break;
+			jsonScript="https://raw.githubusercontent.com/GA-Rav3n/Message-Helper/main/EN-TPL.json";
+		case 'us':
+            jsonScript="https://raw.githubusercontent.com/GA-Rav3n/Message-Helper/main/US-TPL.json";
+			break;
+		case 'pl':
+            jsonScript="https://raw.githubusercontent.com/Neshi/Og/main/data/messages.json";
+			break;
+		default:
+            alert("UNSUPPORTED VERSION\n\nThis version of the Global Message Helper cannot be used on this domain in the host language as this language isn't currently supported.\nPlease contact Rav3n on Mattermost to advise him of this and to provide translations for your community.");
+			break;
     }
+}
+
+function setPermLevel() {
+	var adminLevel = 0;
+	var x = document.evaluate("/html/body/div[3]/div[2]", document, null, XPathResult.ANY_TYPE, null).iterateNext();
+	if(x){
+		if ((document.querySelector('a[href*="op_overview"]') !== null) && (document.querySelector('a[href*="interface"]') !== undefined)) {adminLevel = 8;} // Admin is GA or higher
+		else if ((document.querySelector('a[href*="op_overview"]') !== null) && (document.querySelector('a[href*="interface"]') == undefined)) {adminLevel = 6;} // User is SGO
+		else {adminLevel = 5;} // User is GO
+		console.log("AdminLevel: " + adminLevel);
+		switch(adminLevel) {
+			case 8:
+			case 7:
+			case 6:
+				$('form input[type="checkbox"]').prop('disabled',false);
+				break;
+			case 5:
+			default:
+				$('form input[type="checkbox"]').prop('disabled',true);
+				break;
+		}
+	}
 }
 
 })();
