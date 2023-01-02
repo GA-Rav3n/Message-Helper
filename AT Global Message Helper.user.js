@@ -7,8 +7,8 @@
 // @match        https://*.ogame.gameforge.com/game/admin2/sendmsg.php?uid=*
 // @icon         https://www.google.com/s2/favicons?domain=gameforge.com
 // @require      https://code.jquery.com/jquery-3.6.0.min.js
-// @updateURL    https://github.com/Neshi/Og/raw/main/scripts/ATMessagingHelper.user.js
-// @downloadURL  https://github.com/Neshi/Og/raw/main/scripts/ATMessagingHelper.user.js
+// @updateURL    https://github.com/GA-Rav3n/Message-Helper/raw/main/AT%20Global%20Message%20Helper.user.js
+// @downloadURL  https://github.com/GA-Rav3n/Message-Helper/raw/main/AT%20Global%20Message%20Helper.user.js
 // @grant        none
 // ==/UserScript==
 
