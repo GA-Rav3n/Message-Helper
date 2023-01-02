@@ -74,15 +74,16 @@
 function setServerInfo() {
 	switch(community) {
         case 'en':
-		case 'us':
-            jsonScript="https://raw.githubusercontent.com/GA-Rav3n/Message-Helper/main/EN-TPL.json";
-			break;
-		case 'pl':
-            jsonScript="https://raw.githubusercontent.com/Neshi/Og/main/data/messages.json";
-			break;
-		default:
-            alert("UNSUPPORTED VERSION\n\nThis version of the Global Message Helper cannot be used on this domain in the host language as this language isn't currently supported.\nPlease contact Rav3n on Mattermost to advise him of this and to provide translations for your community.");
-			break;
+		jsonScript="https://raw.githubusercontent.com/GA-Rav3n/Message-Helper/main/EN-TPL.json";
+	case 'us':
+		jsonScript="https://raw.githubusercontent.com/GA-Rav3n/Message-Helper/main/US-TPL.json";
+		break;
+	case 'pl':
+		jsonScript="https://raw.githubusercontent.com/Neshi/Og/main/data/messages.json";
+		break;
+	default:
+            	alert("UNSUPPORTED VERSION\n\nThis version of the Global Message Helper cannot be used on this domain in the host language as this language isn't currently supported.\nPlease contact Rav3n on Mattermost to advise him of this and to provide translations for your community.");
+		break;
     }
 }
 
