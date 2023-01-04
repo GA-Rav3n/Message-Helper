@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AT Global Message Helper
 // @namespace    https://comastuff.com/
-// @version      0.6
+// @version      0.7
 // @description  Provides templates for all universes in a particular community, without having to re-type them for each universe.
 // @author       Neshi & Rav3n
 // @match        https://*.ogame.gameforge.com/game/admin2/sendmsg.php?uid=*
@@ -14,6 +14,13 @@
 
 (function() {
     'use strict';
+
+	//********** USE CUSTOM MESSAGE FILE **********
+	var useCustomJson = false; // Change this to true to activate
+	var customJsonLoc = "YOUR CUSTOM LINK HERE";
+	//********** END CUSTOM SETTINGS **********
+
+	// DO NOT EDIT ANYTHING BELOW THIS POINT!
 	var urlID = document.URL.match(/(^https?):\/\/s([0-9]+)\-(\w+)/);
 	var community = urlID[3];
 	var jsonScript;
@@ -75,7 +82,7 @@
 
 function setServerInfo() {
 	switch(community) {
-        case 'en':
+		case 'en':
 			lvl5Rank = "https://image.board.gameforge.com/uploads/ogame/en/GameOperator_ogame_en_60b28f910d049ef1acab434f7eeb9860.png";
 			lvl6Rank = "https://image.board.gameforge.com/uploads/ogame/en/SuperGameOperator_ogame_en_60b28f910d049ef1acab434f7eeb9860.png";
 			lvl8Rank = "https://image.board.gameforge.com/uploads/ogame/en/GameAdmin_ogame_en_60b28f910d049ef1acab434f7eeb9860.png";
@@ -97,6 +104,7 @@ function setServerInfo() {
             alert("UNSUPPORTED VERSION\n\nThis version of the Global Message Helper cannot be used on this domain in the host language as this language isn't currently supported.\nPlease contact Rav3n on Mattermost to advise him of this and to provide translations for your community.");
 			break;
     }
+	if (useCustomJson) {jsonScript = customJsonLoc;}
 }
 
 function setPermLevel() {
